@@ -1,0 +1,24 @@
+{
+  "name": "new-world-price-scanner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rolandmarg/New-World-Price-Scanner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rolandmarg/New-World-Price-Scanner/issues"
+  },
+  "homepage": "https://github.com/rolandmarg/New-World-Price-Scanner#readme",
+  "dependencies": {
+    "screenshot-desktop": "^1.12.7",
+    "tesseract.js": "^3.0.3"
+  }
+}
