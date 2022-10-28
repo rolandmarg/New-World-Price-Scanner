@@ -21,6 +21,10 @@ async function bootstrap() {
   const date = format(new Date(), 'MM/dd/yy HH:MM:SS');
   console.log(date, '|', item, '| buy', buyPrice, '| sell', sellPrice);
   const row = [date, item, buyPrice, sellPrice];
+  if (!item || !buyPrice || !sellPrice) {
+    throw new Error('oiii');
+  }
+
   await appendSpreadSheet([row]);
 }
 
