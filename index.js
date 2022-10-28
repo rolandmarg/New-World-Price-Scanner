@@ -4,24 +4,39 @@ const appendSpreadSheet = require('./google');
 const screenshot = require('screenshot-desktop');
 const sharp = require('sharp');
 
-const sellPos = { left: 1622, top: 300, width: 200, height: 100 };
-const buyPos = { left: 1620, top: 705, width: 200, height: 100 };
+const num1Pos = { left: 1620, top: 310, width: 200, height: 100 };
+const num2Pos = { left: 1622, top: 705, width: 200, height: 100 };
+const text1Pos = { left: 1789, top: 228, width: 70, height: 23 };
+const text2Pos = { left: 1797, top: 615, width: 60, height: 21 };
 const itemPos = { left: 552, top: 304, width: 240, height: 32 };
 
 async function bootstrap() {
   const img = await screenshot({ format: 'png' });
 
   await sharp(img).extract(itemPos).toFile('./screenshots/item.png');
-  await sharp(img).extract(sellPos).toFile('./screenshots/sell.png');
-  await sharp(img).extract(buyPos).toFile('./screenshots/buy.png');
+  await sharp(img).extract(num1Pos).toFile('./screenshots/num1.png');
+  await sharp(img).extract(num2Pos).toFile('./screenshots/num2.png');
+  await sharp(img).extract(text1Pos).toFile('./screenshots/text1.png');
+  await sharp(img).extract(text2Pos).toFile('./screenshots/text2.png');
 
   const item = execSync('tesseract screenshots\\item.png stdout', { encoding: 'utf8' }).trim();
-  const sellPrice = +execSync('tesseract screenshots\\sell.png stdout', { encoding: 'utf8' }).trim();
-  const buyPrice = +execSync('tesseract screenshots\\buy.png stdout', { encoding: 'utf8' }).trim();
+  const text1 = execSync('tesseract screenshots\\text1.png stdout', { encoding: 'utf8' }).trim();
+  const text2 = execSync('tesseract screenshots\\text2.png stdout', { encoding: 'utf8' }).trim();
+  const num1 = +execSync('tesseract screenshots\\num1.png stdout', { encoding: 'utf8' }).trim() || 0;
+  const num2 = +execSync('tesseract screenshots\\num2.png stdout', { encoding: 'utf8' }).trim() || 0;
+  let buyPrice, sellPrice;
+  if (text1 === 'SELL' || text2 === 'BUY') {
+    sellPrice = num1;
+    buyPrice = num2;
+  } else {
+    sellPrice = num2;
+    buyPrice = num1;
+  }
+
   const date = format(new Date(), 'MM/dd/yy HH:MM:SS');
   console.log(date, '|', item, '| buy', buyPrice, '| sell', sellPrice);
   const row = [date, item, buyPrice, sellPrice];
-  if (!item || !buyPrice || !sellPrice) {
+  if (!item) {
     throw new Error('oiii');
   }
 
