@@ -16,8 +16,8 @@ async function bootstrap() {
   await sharp(img).extract(buyPos).toFile('./screenshots/buy.png');
 
   const item = execSync('tesseract screenshots\\item.png stdout', { encoding: 'utf8' }).trim();
-  const sellPrice = execSync('tesseract screenshots\\sell.png stdout', { encoding: 'utf8' }).trim();
-  const buyPrice = execSync('tesseract screenshots\\buy.png stdout', { encoding: 'utf8' }).trim();
+  const sellPrice = +execSync('tesseract screenshots\\sell.png stdout', { encoding: 'utf8' }).trim();
+  const buyPrice = +execSync('tesseract screenshots\\buy.png stdout', { encoding: 'utf8' }).trim();
   const date = format(new Date(), 'MM/dd/yy HH:MM:SS');
   console.log(date, '|', item, '| buy', buyPrice, '| sell', sellPrice);
   const row = [date, item, buyPrice, sellPrice];
