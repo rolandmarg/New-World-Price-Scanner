@@ -1,4 +1,6 @@
 screenshots/
+credentials.json
+token.json
 
 # Logs
 logs

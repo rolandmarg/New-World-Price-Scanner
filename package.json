@@ -19,6 +19,7 @@
   "homepage": "https://github.com/rolandmarg/New-World-Price-Scanner#readme",
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.0",
+    "date-fns": "^2.29.3",
     "googleapis": "^105.0.0",
     "screenshot-desktop": "^1.12.7",
     "sharp": "^0.31.1"

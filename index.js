@@ -1,4 +1,6 @@
+const { format } = require('date-fns');
 const { execSync } = require('child_process');
+const appendSpreadSheet = require('./google');
 const screenshot = require('screenshot-desktop');
 const sharp = require('sharp');
 
@@ -13,9 +15,13 @@ async function bootstrap() {
   await sharp(img).extract(sellPos).toFile('./screenshots/sell.png');
   await sharp(img).extract(buyPos).toFile('./screenshots/buy.png');
 
-  console.log('item', execSync('tesseract screenshots\\item.png stdout', { encoding: 'utf8' }));
-  console.log('sell', execSync('tesseract screenshots\\sell.png stdout', { encoding: 'utf8' }));
-  console.log('buy', execSync('tesseract screenshots\\buy.png stdout', { encoding: 'utf8' }));
+  const item = execSync('tesseract screenshots\\item.png stdout', { encoding: 'utf8' }).trim();
+  const sellPrice = execSync('tesseract screenshots\\sell.png stdout', { encoding: 'utf8' }).trim();
+  const buyPrice = execSync('tesseract screenshots\\buy.png stdout', { encoding: 'utf8' }).trim();
+  const date = format(new Date(), 'MM/dd/yy HH:MM:SS');
+  console.log(date, '|', item, '| buy', buyPrice, '| sell', sellPrice);
+  const row = [date, item, buyPrice, sellPrice];
+  await appendSpreadSheet([row]);
 }
 
 bootstrap();
