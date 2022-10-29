@@ -1,5 +1,7 @@
-<# : batch portion (begins PowerShell multiline comment block)
+<# : batch portion (begins PowerShell multiline comment block) 
 @echo off & setlocal
+
+: courtesy of https://stackoverflow.com/a/41135060
 
 set /P "=Waiting for ctrl-F... "<NUL
 
