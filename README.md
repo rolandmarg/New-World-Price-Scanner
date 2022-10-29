@@ -1,6 +1,6 @@
 while looking at trade post in game, press CTRL+F to capture sell/buy prices and send to excel sheet as [time, item, sellPrice, buyPrice] values
 
-this project was built for personal use and as of now not ready to invest to make it publicly available
+this project was built for personal use and I've not invested enough time to produce enough quality for project to be publicly available
 
 i.e. right now it fits my screen exactly(to OCR item name and prices I have to specify exact position coordinates)
 
