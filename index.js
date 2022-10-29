@@ -8,7 +8,7 @@ const num1Pos = { left: 1620, top: 310, width: 200, height: 100 };
 const num2Pos = { left: 1622, top: 705, width: 200, height: 100 };
 const text1Pos = { left: 1789, top: 228, width: 70, height: 23 };
 const text2Pos = { left: 1797, top: 615, width: 60, height: 21 };
-const itemPos = { left: 552, top: 304, width: 240, height: 32 };
+const itemPos = { left: 552, top: 294, width: 240, height: 50 };
 
 async function bootstrap() {
   const img = await screenshot({ format: 'png' });
@@ -19,7 +19,7 @@ async function bootstrap() {
   await sharp(img).extract(text1Pos).toFile('./screenshots/text1.png');
   await sharp(img).extract(text2Pos).toFile('./screenshots/text2.png');
 
-  const item = execSync('tesseract screenshots\\item.png stdout', { encoding: 'utf8' }).trim();
+  const item = execSync('tesseract screenshots\\item.png stdout', { encoding: 'utf8' }).trim().replaceAll('\r\n', ' ');
   const text1 = execSync('tesseract screenshots\\text1.png stdout', { encoding: 'utf8' }).trim();
   const text2 = execSync('tesseract screenshots\\text2.png stdout', { encoding: 'utf8' }).trim();
   const num1 = +execSync('tesseract screenshots\\num1.png stdout', { encoding: 'utf8' }).trim() || 0;
