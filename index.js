@@ -13,11 +13,12 @@ const itemPos = { left: 552, top: 294, width: 240, height: 50 };
 async function bootstrap() {
   const img = await screenshot({ format: 'png' });
 
-  await sharp(img).extract(itemPos).toFile('./screenshots/item.png');
-  await sharp(img).extract(num1Pos).toFile('./screenshots/num1.png');
-  await sharp(img).extract(num2Pos).toFile('./screenshots/num2.png');
-  await sharp(img).extract(text1Pos).toFile('./screenshots/text1.png');
-  await sharp(img).extract(text2Pos).toFile('./screenshots/text2.png');
+  // before resizing, 1.85 was being OCR-ed as 185
+  await sharp(img).extract(itemPos).resize(800).toFile('./screenshots/item.png');
+  await sharp(img).extract(num1Pos).resize(800).toFile('./screenshots/num1.png');
+  await sharp(img).extract(num2Pos).resize(800).toFile('./screenshots/num2.png');
+  await sharp(img).extract(text1Pos).resize(800).toFile('./screenshots/text1.png');
+  await sharp(img).extract(text2Pos).resize(800).toFile('./screenshots/text2.png');
 
   const item = execSync('tesseract screenshots\\item.png stdout', { encoding: 'utf8' }).trim().replaceAll('\r\n', ' ');
   const text1 = execSync('tesseract screenshots\\text1.png stdout', { encoding: 'utf8' }).trim();
