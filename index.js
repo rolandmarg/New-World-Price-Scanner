@@ -4,34 +4,34 @@ const appendSpreadSheet = require('./google');
 const screenshot = require('screenshot-desktop');
 const sharp = require('sharp');
 
-const num1Pos = { left: 1620, top: 310, width: 200, height: 100 };
-const num2Pos = { left: 1622, top: 705, width: 200, height: 100 };
-const text1Pos = { left: 1789, top: 228, width: 70, height: 23 };
-const text2Pos = { left: 1797, top: 615, width: 60, height: 21 };
+const topNumPos = { left: 1620, top: 310, width: 200, height: 100 };
+const bottomNumPos = { left: 1622, top: 705, width: 200, height: 100 };
+const topTextPos = { left: 1789, top: 228, width: 70, height: 23 };
+const bottomTextPos = { left: 1797, top: 615, width: 60, height: 21 };
 const itemPos = { left: 552, top: 294, width: 240, height: 50 };
 
 async function bootstrap() {
   const img = await screenshot({ format: 'png' });
 
   // before resizing, 1.85 was being OCR-ed as 185
-  await sharp(img).extract(itemPos).resize(800).toFile('./screenshots/item.png');
-  await sharp(img).extract(num1Pos).resize(800).toFile('./screenshots/num1.png');
-  await sharp(img).extract(num2Pos).resize(800).toFile('./screenshots/num2.png');
-  await sharp(img).extract(text1Pos).resize(800).toFile('./screenshots/text1.png');
-  await sharp(img).extract(text2Pos).resize(800).toFile('./screenshots/text2.png');
+  await sharp(img).extract(itemPos).toFile('./screenshots/item.png');
+  await sharp(img).extract(topNumPos).resize(800).toFile('./screenshots/topNum.png');
+  await sharp(img).extract(bottomNumPos).resize(800).toFile('./screenshots/bottomNum.png');
+  await sharp(img).extract(topTextPos).toFile('./screenshots/topText.png');
+  await sharp(img).extract(bottomTextPos).toFile('./screenshots/bottomText.png');
 
   const item = execSync('tesseract screenshots\\item.png stdout', { encoding: 'utf8' }).trim().replaceAll('\r\n', ' ');
-  const text1 = execSync('tesseract screenshots\\text1.png stdout', { encoding: 'utf8' }).trim();
-  const text2 = execSync('tesseract screenshots\\text2.png stdout', { encoding: 'utf8' }).trim();
-  const num1 = +execSync('tesseract screenshots\\num1.png stdout', { encoding: 'utf8' }).trim() || 0;
-  const num2 = +execSync('tesseract screenshots\\num2.png stdout', { encoding: 'utf8' }).trim() || 0;
+  const topText = execSync('tesseract screenshots\\topText.png stdout', { encoding: 'utf8' }).trim();
+  const bottomText = execSync('tesseract screenshots\\bottomText.png stdout', { encoding: 'utf8' }).trim();
+  const topNum = +execSync('tesseract screenshots\\topNum.png stdout', { encoding: 'utf8' }).trim().replaceAll(',', '') || 0;
+  const bottomNum = +execSync('tesseract screenshots\\bottomNum.png stdout', { encoding: 'utf8' }).trim().replaceAll(',', '') || 0;
   let buyPrice, sellPrice;
-  if (text1 === 'SELL' || text2 === 'BUY') {
-    sellPrice = num1;
-    buyPrice = num2;
+  if (topText === 'SELL' || bottomText === 'BUY') {
+    sellPrice = topNum;
+    buyPrice = bottomNum;
   } else {
-    sellPrice = num2;
-    buyPrice = num1;
+    sellPrice = bottomNum;
+    buyPrice = topNum;
   }
 
   const date = format(new Date(), 'MM/dd/yyyy HH:MM:SS');
