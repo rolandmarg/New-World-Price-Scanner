@@ -86,7 +86,7 @@ async function appendSpreadSheet(values) {
   return google.sheets({ version: 'v4', auth }).spreadsheets.values.append({
     spreadsheetId: '1DxtxAPI8BIPyQHeOifStYm-XmEZlkFAR4QPZeofOaNU',
     range: 'prices!A2:D',
-    valueInputOption: 'RAW',
+    valueInputOption: 'USER_ENTERED',
     resource: { values }
   });
 }
