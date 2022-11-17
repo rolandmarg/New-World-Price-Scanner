@@ -34,7 +34,7 @@ async function bootstrap() {
     buyPrice = topNum;
   }
 
-  const date = format(new Date(), 'MM/dd/yyyy HH:MM:SS');
+  const date = format(new Date(), 'MM/dd/yyyy HH:mm:ss');
   console.log(date, '|', item, '| buy', buyPrice, '| sell', sellPrice);
   const row = [date, item, buyPrice, sellPrice];
   if (!item) {
